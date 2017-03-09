@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="eduardodornelles.fastnotes.EditarNotaActivity"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+
+        >
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar lembrete"
+            android:textSize="28dp"
+            android:gravity="center"
+            android:layout_marginRight="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/imageView"
+            android:layout_toStartOf="@+id/imageView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lata_excluir_nota"
+            android:onClick="removerNota"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/imageView" />
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:maxLength="30"
+        android:id="@+id/nome_lembrete"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:hint="Digite um nome para o lembrete"
+        android:gravity="center"/>
+
+    <EditText
+        android:maxLength="150"
+        android:layout_margin="20dp"
+        android:id="@+id/detalhes_lembrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:maxLines="2"
+        android:inputType="textMultiLine"
+        android:gravity="center"
+        android:hint="Digite aqui os detalhes "/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_margin="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Marque o nível de relevância:"
+            android:gravity="center"
+            />
+
+        <RadioGroup
+            android:id="@+id/opcoes_grau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp">
+
+            <RadioButton
+                android:id="@+id/normal_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Normal" />
+
+            <RadioButton
+                android:id="@+id/importante_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Importante" />
+
+            <RadioButton
+                android:id="@+id/muito_importante_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Muito Importante" />
+        </RadioGroup>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/botao_avancar"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:gravity="center"
+        android:text="Editar Data e hora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="editarDataHora"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/botao_confirmar"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:gravity="center"
+                android:text="Confirmar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="salvarAlteracao"
+            />
+            <Button
+                android:id="@+id/botao_cancelar"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:gravity="center"
+                android:text="Voltar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="cancelarAlteracao"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

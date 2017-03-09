@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="eduardodornelles.fastnotes.DataActivity"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+
+        android:id="@+id/titulo_txtv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Novo lembrete"
+        android:textSize="28dp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleciona a data limite:"
+        android:textSize="20dp"
+        android:gravity="center"/>
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/botao_avancar"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:gravity="center"
+        android:text="Avançar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="avancar"/>
+
+
+</LinearLayout>
