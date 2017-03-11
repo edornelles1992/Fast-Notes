@@ -14,6 +14,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,10 +29,14 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     static final int PICK_CONTACT_REQUEST = 1;
     private ArrayList<Nota> listaNotas;
     private int posicao;
+    ArrayList<ItemListView> itens;
+    private ListView listView;
+    private AdapterListView adapterListView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,49 +46,63 @@ public class MainActivity extends AppCompatActivity {
         try {
           if(lerDados()!=null)
           {  listaNotas = lerDados();
-              PreencherListV(); }
+             Nota.setId(listaNotas.size());
+              }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
+        //Pega a referencia do ListView
+        listView = (ListView) findViewById(R.id.list);
+        //Define o Listener quando alguem clicar no item.
+        listView.setOnItemClickListener(this);
+        createListView();
+
+
+
 
     }
 
-    private void PreencherListV(){ //chama caso tenha dados salvos para abrir
+    private void createListView() {
+        //Criamos nossa lista que preenchera o ListView
+        if (listaNotas==null) { return;} // lista vazia
 
-        ArrayAdapter<Nota> adapter = new ArrayAdapter<Nota>(this,
-                android.R.layout.simple_list_item_1, listaNotas) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-
-                View view = super.getView(position, convertView, parent);
-
-                // Como o simple_list_item_1 retorna um TextView, esse cast pode ser feito sem problemas
-                ((TextView) view).setBackgroundColor(Color.parseColor("#e7eecc"));
-
-
-                return view;
+            itens = new ArrayList<ItemListView>();
+            for (Nota atual: listaNotas){
+                ItemListView item = new ItemListView(atual.toString(),atual.getCor());
+                item.setIdentificador(atual.getIdentificador());
+                itens.add(item);
             }
 
-        };
 
+            //Cria o adapter
+            adapterListView = new AdapterListView(this, itens);
 
-        ListView listaDeNotasView = (ListView) findViewById(R.id.list_notas);
-        listaDeNotasView.setAdapter(adapter);
-
-        listaDeNotasView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //clicar em uma nota para editar no listview
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                Nota notaAtual = listaNotas.get(position);
-                editarNota(notaAtual, position);
-            }
-        });
+            //Define o Adapter
+            listView.setAdapter(adapterListView);
+            //Cor quando a lista Ã© selecionada para ralagem.
+            listView.setCacheColorHint(Color.TRANSPARENT);
 
     }
 
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        //Pega o item que foi selecionado.
+        ItemListView item = adapterListView.getItem(arg2); // arg2 = posicao
+        //DemostraÃ§Ã£o
+    //    Toast.makeText(this, "VocÃª Clicou em: " + item.getTexto(), Toast.LENGTH_LONG).show();
+        posicao = arg2;
+       Nota atual =  listaNotas.get(posicao);
+        editarNota(atual,posicao);
 
+    }
+   /*
+       RESULT_OK - nova nota
+        2 - Edição de nota
+        3 - Remoção de nota
+
+      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -96,44 +118,15 @@ public class MainActivity extends AppCompatActivity {
                 listaNotas.add(nova);
             } else if (resultCode == 2) {
                 listaNotas.set(posicao, nova);
-            }
-            else { //3 - remover nota (veio do EditarNota)
-                listaNotas.remove(posicao);
-            }
-
-
-            ArrayAdapter<Nota> adapter = new ArrayAdapter<Nota>(this,
-                    android.R.layout.simple_list_item_1, listaNotas) {
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-
-                    View view = super.getView(position, convertView, parent);
-
-                    // Como o simple_list_item_1 retorna um TextView, esse cast pode ser feito sem problemas
-                    ((TextView) view).setBackgroundColor(Color.parseColor("#e7eecc"));
-
-
-                    return view;
                 }
-
-            };
-
-
-            ListView listaDeNotasView = (ListView) findViewById(R.id.list_notas);
-            listaDeNotasView.setAdapter(adapter);
-
-            listaDeNotasView.setOnItemClickListener(new AdapterView.OnItemClickListener() { //clicar em uma nota para editar no listview
-                @Override
-                public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                    Nota notaAtual = listaNotas.get(position);
-                    editarNota(notaAtual, position);
-                }
-            });
-
+                else { //3 - remover nota (veio do EditarNota)
+                       listaNotas.remove(posicao);
+                     }
+            createListView(); //atualizar listview
          }
         try {
             gravarDados();
-        } catch (IOException e) {
+            } catch (IOException e) {
 
         }
     }
@@ -143,31 +136,19 @@ public class MainActivity extends AppCompatActivity {
    vai para EditarNotaActivity para ser feito as alterações
     */
     public void editarNota(Nota notaAtual, int position){
-        posicao = position;
         Intent intent = new Intent(this, EditarNotaActivity.class);
         intent.putExtra("Objeto", notaAtual);
-
         startActivityForResult(intent,2);
-
     }
-
-    /*
-     Adicionar um novo lembrete
-     vai para NovaNotaActivity para preencher os dados da nova nota
-      */
 
     public void adicionarNota(View view) {
         Intent NovaNota = new Intent(this, NovaNotaActivity.class);
-
         startActivityForResult(NovaNota,1);
     }
 
-
-
    public void gravarDados() throws IOException {
-       String FILENAME = "savenotas_file";
+       String FILENAME = "savenotas1_file";
        File file =getFileStreamPath(FILENAME);
-
        FileOutputStream fos = new FileOutputStream(file);
        ObjectOutputStream oos = new ObjectOutputStream(fos);
        oos.writeObject(listaNotas);
@@ -176,15 +157,13 @@ public class MainActivity extends AppCompatActivity {
    }
 
    public ArrayList<Nota> lerDados() throws IOException, ClassNotFoundException {
-       String FILENAME = "savenotas_file";
+       String FILENAME = "savenotas1_file";
        File file =getFileStreamPath(FILENAME);
-
        FileInputStream fis = new FileInputStream(file);
        ObjectInputStream ois = new ObjectInputStream(fis);
        ArrayList<Nota> lista = (ArrayList<Nota>) ois.readObject();
        fis.close();
        ois.close();
-
        return lista;
    }
 

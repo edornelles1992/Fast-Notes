@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="eduardodornelles.fastnotes.HoraActivity"
     android:orientation="vertical"
+    android:background="#FFD54F"
    >
 
     <TextView
@@ -30,7 +31,10 @@
         android:layout_margin="20dp"
         android:id="@+id/horario_lembrete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:numbersBackgroundColor="#FFD54F"
+        android:headerBackground="#FFE082"
+        android:numbersSelectorColor="#FFA000"/>
 
     <Button
 

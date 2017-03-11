@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 public class NovaNotaActivity extends AppCompatActivity {
 
@@ -27,6 +28,10 @@ public class NovaNotaActivity extends AppCompatActivity {
         EditText nomeEditText = (EditText) findViewById(R.id.nome_lembrete);
         Editable nomeEdit = nomeEditText.getText();
         String nome =  nomeEdit.toString();
+        if (nome.equals(null)||nome.equals("")){
+            Toast.makeText(this, "Digite um titulo/nome para a nota!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         EditText detalheEditText = (EditText) findViewById(R.id.detalhes_lembrete);
         Editable detalheEdit = detalheEditText.getText();
@@ -35,21 +40,27 @@ public class NovaNotaActivity extends AppCompatActivity {
         RadioButton normal = (RadioButton) findViewById(R.id.normal_radio);
         RadioButton importante = (RadioButton) findViewById(R.id.importante_radio);
         RadioButton muitoImportante = (RadioButton) findViewById(R.id.muito_importante_radio);
-        String importancia;
+        String importancia, cor;
         if (normal.isChecked()) {
             CharSequence impEdit = normal.getText();
             importancia =  impEdit.toString();
+            cor = "#66bb6a";
         } else if(importante.isChecked()){
             CharSequence impEdit = importante.getText();
             importancia =  impEdit.toString();
+            cor = "#d4e157";
+
         } else {
             CharSequence impEdit = muitoImportante.getText();
             importancia =  impEdit.toString();
+            cor = "#ef5350";
+
         }
         Nota novaNota = new Nota();
         novaNota.setNome(nome);
         novaNota.setObservacao(detalhe);
         novaNota.setNivelRelevancia(importancia);
+        novaNota.setCor(cor);
 
 
         Intent intent = new Intent(this, DataActivity.class);
@@ -63,7 +74,7 @@ public class NovaNotaActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) { //caso tenha completado a nota
         setResult(RESULT_OK,data);
        finish();}
-        else { //caso o usuario voltou de tela
+        else { //caso o usuario voltou de tela ajusta para o que o usuario digitou e marcou
 
             Intent intent = data;
             Nota nova = (Nota) intent.getSerializableExtra("Objeto");

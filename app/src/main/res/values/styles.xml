@@ -6,6 +6,12 @@
      <!--  <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item> -->
+
+        <!-- Primary theme color of the app (sets background color of app bar) -->
+
+
+        <!-- Background color of buttons in the app -->
+        <item name="colorButtonNormal">#FFE082</item>
     </style>
 
 </resources>

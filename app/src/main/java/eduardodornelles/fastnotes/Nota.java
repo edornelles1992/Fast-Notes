@@ -15,9 +15,25 @@ public class Nota implements Serializable {
     private boolean realizado;
     private String nivelRelevancia;
     private String cor;
+    private static int id = 1;
+    private int identificador;
 
     public Nota() { //construtor
         this.realizado = false;
+        identificador = id;
+        id++;
+    }
+
+    public static void setId(int qtd){
+       id = qtd;
+    }
+
+    public int getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(int identificador) {
+        this.identificador = identificador;
     }
 
     public String getNivelRelevancia() {
@@ -41,6 +57,9 @@ public class Nota implements Serializable {
 
     public String getCor(){return cor;}
 
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
 
     public boolean isRealizado() {
         return realizado;
@@ -84,8 +103,15 @@ public class Nota implements Serializable {
 
 
     public String toString() {
+
+        if (data!=null){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dataSelecionada = sdf.format((data));
-        return nome + "\n" + dataSelecionada + " as " +horario;
+        return "  " + nome + "\n  " + dataSelecionada + " as " +horario + "                                                     ";}
+        else {
+
+            return "  " + nome + "\n                                                     ";
+        }
+
     }
 }

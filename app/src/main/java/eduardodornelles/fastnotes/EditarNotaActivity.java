@@ -1,6 +1,8 @@
 package eduardodornelles.fastnotes;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditarNotaActivity extends AppCompatActivity {
     private Nota atual;
@@ -51,7 +54,10 @@ public class EditarNotaActivity extends AppCompatActivity {
         EditText nomeEditText = (EditText) findViewById(R.id.nome_lembrete);
         Editable nomeEdit = nomeEditText.getText();
         String nome =  nomeEdit.toString();
-
+        if (nome.equals(null)||nome.equals("")){
+            Toast.makeText(this, "Digite um titulo/nome para a nota!", Toast.LENGTH_LONG).show();
+            return;
+        }
         EditText detalheEditText = (EditText) findViewById(R.id.detalhes_lembrete);
         Editable detalheEdit = detalheEditText.getText();
         String detalhe =  detalheEdit.toString();
@@ -156,9 +162,35 @@ public class EditarNotaActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    método ativado ao clicar na lixeira
+    exide um AlertDialog para o usuario confirmar a exclusão
+     */
         public void removerNota(View view) {
-            setResult(3,getIntent());
-            finish();
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setTitle("Atenção");
+
+                builder.setMessage("Deseja mesmo apagar?")
+                        .setCancelable(false)
+                        .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                setResult(3,getIntent());
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
         }
+
+
     }
 
