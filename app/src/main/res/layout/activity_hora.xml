@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="eduardodornelles.fastnotes.HoraActivity"
     android:orientation="vertical"
-    android:background="#FFD54F"
+    android:background="#FFECB3"
    >
 
     <TextView

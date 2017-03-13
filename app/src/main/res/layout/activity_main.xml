@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="eduardodornelles.fastnotes.MainActivity"
     android:orientation="vertical"
-    android:background="#FFD54F">
+    android:background="#FFECB3"
+    android:id="@+id/container_main">
 
 
     <LinearLayout
@@ -22,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Fast Notes"
             android:textSize="28dp"
+
           />
     </LinearLayout>
 
@@ -30,16 +32,7 @@
         android:layout_height="400dp"
         android:layout_margin="20dp">
 
-        <ListView
-
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FFECB3"
-
-            >
-
-        </ListView>
+        <include layout="@layout/fragment_main" />
     </LinearLayout>
 
     <Button

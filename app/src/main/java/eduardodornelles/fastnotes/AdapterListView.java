@@ -69,9 +69,16 @@ public class AdapterListView extends BaseAdapter {
 
         //atravez do layout pego pelo LayoutInflater, pegamos cada id relacionado
         //ao item e definimos as informaÃ§Ãµes.
-        ((TextView) view.findViewById(R.id.text)).setText(item.getTexto());
+
         (view.findViewById(R.id.text)).setBackgroundColor(Color.parseColor(item.getCor()));
-      //  TextView view_instance = (TextView) view.findViewById(R.id.text);
+        (view.findViewById(R.id.fundo_view)).setBackgroundColor(Color.parseColor(item.getCor()));
+        ((TextView) view.findViewById(R.id.text)).setText(item.getTexto());
+
+        if (item.getIconeRid()!=0){
+            ((ImageView) view.findViewById(R.id.imageView)).setImageResource(item.getIconeRid());
+
+        }
+        //  TextView view_instance = (TextView) view.findViewById(R.id.text);
        // view_instance.getLayoutParams().width = -200;
      //  view_instance.requestLayout();
 

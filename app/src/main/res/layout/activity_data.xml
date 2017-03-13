@@ -7,7 +7,7 @@
     tools:context="eduardodornelles.fastnotes.DataActivity"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#FFD54F">
+    android:background="#FFECB3">
 
     <TextView
 

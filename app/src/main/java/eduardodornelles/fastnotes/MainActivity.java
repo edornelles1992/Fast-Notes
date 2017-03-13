@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
@@ -31,11 +33,12 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     static final int PICK_CONTACT_REQUEST = 1;
-    private ArrayList<Nota> listaNotas;
+    static private ArrayList<Nota> listaNotas;
     private int posicao;
     ArrayList<ItemListView> itens;
     private ListView listView;
     private AdapterListView adapterListView;
+
 
 
     @Override
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             e.printStackTrace();
         }
 
+
         //Pega a referencia do ListView
         listView = (ListView) findViewById(R.id.list);
         //Define o Listener quando alguem clicar no item.
@@ -71,7 +75,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             itens = new ArrayList<ItemListView>();
             for (Nota atual: listaNotas){
+
                 ItemListView item = new ItemListView(atual.toString(),atual.getCor());
+                if (atual.getTemPontoMapa()) {
+                    item.setIconeRid(R.drawable.iconetopo_mapa);
+                }
                 item.setIdentificador(atual.getIdentificador());
                 itens.add(item);
             }
@@ -94,8 +102,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //    Toast.makeText(this, "VocÃª Clicou em: " + item.getTexto(), Toast.LENGTH_LONG).show();
         posicao = arg2;
        Nota atual =  listaNotas.get(posicao);
+       LinearLayout txtV = (LinearLayout) arg1;
+        txtV.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
         editarNota(atual,posicao);
-
     }
    /*
        RESULT_OK - nova nota
@@ -131,6 +140,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    public void runAnimationFromXml(View view, int animResId){
+        Animation animation = AnimationUtils.loadAnimation(this,animResId);
+        view.startAnimation(animation);
+    }
+
    /*
    Editar a nota recebida por parametra
    vai para EditarNotaActivity para ser feito as alterações
@@ -140,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtra("Objeto", notaAtual);
         startActivityForResult(intent,2);
     }
+
+
+
+
 
     public void adicionarNota(View view) {
         Intent NovaNota = new Intent(this, NovaNotaActivity.class);
@@ -166,5 +184,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
        ois.close();
        return lista;
    }
+
+
 
 }

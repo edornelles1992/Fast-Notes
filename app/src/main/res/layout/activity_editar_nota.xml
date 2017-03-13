@@ -8,23 +8,33 @@
     android:orientation="vertical"
     android:weightSum="1"
     android:gravity="center"
-    android:background="#FFD54F"
+    android:background="#FFECB3"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-
+        android:orientation = "horizontal"
         >
+
+        <ImageView
+            android:layout_width="92dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mapa_icone"
+            android:onClick="verMapa"
+            android:layout_toLeftOf="@+id/titulo"
+            android:layout_toStartOf="@+id/titulo"
+            android:id="@+id/imageMap" />
+
         <TextView
+
             android:id="@+id/titulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Editar lembrete"
             android:textSize="28dp"
             android:gravity="center"
-            android:layout_marginRight="17dp"
-            android:layout_marginEnd="17dp"
+
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/imageView"
             android:layout_toStartOf="@+id/imageView" />
@@ -39,11 +49,11 @@
             android:layout_alignParentEnd="true"
             android:id="@+id/imageView" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <EditText
-        android:maxLength="54"
+        android:maxLength="39"
         android:id="@+id/nome_lembrete"
         android:layout_margin="20dp"
         android:layout_width="match_parent"

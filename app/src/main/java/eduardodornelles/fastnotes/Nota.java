@@ -17,11 +17,44 @@ public class Nota implements Serializable {
     private String cor;
     private static int id = 1;
     private int identificador;
+    private boolean temPontoMapa;
+    private double latitude , longitude;
+
+
 
     public Nota() { //construtor
         this.realizado = false;
         identificador = id;
         id++;
+        temPontoMapa = false;
+    }
+
+    public boolean getTemPontoMapa() {
+        return temPontoMapa;
+    }
+
+    public void setTemPontoMapa(boolean temPontoMapa) {
+        this.temPontoMapa = temPontoMapa;
+    }
+
+    public static int getId() {
+        return id;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public static void setId(int qtd){
@@ -107,10 +140,10 @@ public class Nota implements Serializable {
         if (data!=null){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String dataSelecionada = sdf.format((data));
-        return "  " + nome + "\n  " + dataSelecionada + " as " +horario + "                                                     ";}
+        return nome + "\n" + dataSelecionada + " as " +horario + "                                                     ";}
         else {
 
-            return "  " + nome + "\n                                                     ";
+            return  nome + "                                                                                            ";
         }
 
     }

@@ -10,7 +10,7 @@ public class ItemListView {
 
     private int identificador;
     private String cor;
-
+    private int iconeRid;
 
 
     public String getCor() {
@@ -24,6 +24,15 @@ public class ItemListView {
     public ItemListView(String texto, String cor_imp) {
         this.texto = texto;
         cor = cor_imp;
+
+    }
+
+    public int getIconeRid() {
+        return iconeRid;
+    }
+
+    public void setIconeRid(int iconeRid) {
+        this.iconeRid = iconeRid;
     }
 
     public int getIdentificador() {

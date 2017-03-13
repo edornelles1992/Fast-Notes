@@ -137,8 +137,11 @@ public class EditarNotaActivity extends AppCompatActivity {
             finish();
         }
         else {
-            Intent intent = getIntent();
-            atual = (Nota) intent.getSerializableExtra("Objeto");
+
+            Intent intent = data;
+            Nota nova = (Nota) intent.getSerializableExtra("Objeto");
+
+            atual = nova;
 
             EditText nomeEditText = (EditText) findViewById(R.id.nome_lembrete);
             nomeEditText.setText(atual.getNome());
@@ -192,5 +195,39 @@ public class EditarNotaActivity extends AppCompatActivity {
         }
 
 
+    public void verMapa(View view) {
+
+        EditText nomeEditText = (EditText) findViewById(R.id.nome_lembrete);
+        Editable nomeEdit = nomeEditText.getText();
+        String nome =  nomeEdit.toString();
+
+        EditText detalheEditText = (EditText) findViewById(R.id.detalhes_lembrete);
+        Editable detalheEdit = detalheEditText.getText();
+        String detalhe =  detalheEdit.toString();
+
+        RadioButton normal = (RadioButton) findViewById(R.id.normal_radio);
+        RadioButton importante = (RadioButton) findViewById(R.id.importante_radio);
+        RadioButton muitoImportante = (RadioButton) findViewById(R.id.muito_importante_radio);
+        String importancia;
+        if (normal.isChecked()) {
+            CharSequence impEdit = normal.getText();
+            importancia =  impEdit.toString();
+        } else if(importante.isChecked()){
+            CharSequence impEdit = importante.getText();
+            importancia =  impEdit.toString();
+        } else {
+            CharSequence impEdit = muitoImportante.getText();
+            importancia =  impEdit.toString();
+        }
+
+        atual.setNome(nome);
+        atual.setObservacao(detalhe);
+        atual.setNivelRelevancia(importancia);
+
+        Intent intent = new Intent(this, MapPane.class);
+        intent.putExtra("Objeto", atual);
+        startActivityForResult(intent,1);
+
     }
+}
 
